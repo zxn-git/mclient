@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:motan="http://api.weibo.com/schema/motan"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+   http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
+
+
+    <!-- motan协议配置 -->
+    <motan:protocol default="true" name="motan" haStrategy="failover"
+                    loadbalance="roundrobin" minClientConnection="1"
+
+    />
+
+
+
+    <!--&lt;!&ndash; 通用referer基础配置 &ndash;&gt;-->
+    <motan:basicReferer requestTimeout="1000" connectTimeout="1000"
+                        accessLog="false" retries="0"
+                         protocol="motan" shareChannel="true"
+                        id="motantestClientBasicConfig" throwException="true" check="true"/>
+
+
+    <!-- reference to the remote service -->
+    <motan:referer id="remoteService" interface="com.mtan.interf.FooService" basicReferer="motantestClientBasicConfig"  directUrl="123.56.217.21:8977"/>
+    <motan:referer id="testService" interface="com.mtan.interf.TestService" basicReferer="motantestClientBasicConfig"  directUrl="123.56.217.21:8988"/>
+    <!--<motan:referer id="testService" interface="com.mtan.interf.TestService" basicReferer="motantestClientBasicConfig" directUrl="123.56.217.21:8977"/>-->
+</beans>
